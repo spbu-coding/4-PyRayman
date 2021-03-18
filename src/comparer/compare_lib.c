@@ -10,8 +10,8 @@ uint8_t **read_rgb(FILE *fp, uint32_t width, uint32_t height, uint16_t bpp){
     for (uint32_t i = 0; i < height; i++) {
         rgb[i] = malloc(sizeof(uint16_t) * width);
         if (!rgb[i]){
-            fprintf(stdout, "Cannot allocate memory for results string in %lld experiment\n", i);
-            for (int j = 0; j < i; j++) {
+            fprintf(stdout, "Cannot allocate memory for results string in %d experiment\n", i);
+            for (uint16_t j = 0; j < i; j++) {
                 free(rgb[i]);
             }
             free(rgb);
@@ -19,8 +19,8 @@ uint8_t **read_rgb(FILE *fp, uint32_t width, uint32_t height, uint16_t bpp){
         }
     }
 
-    for (long long int i = 0; i < height; i++) {
-        for (long long int j = 0; j < width; j++) {
+    for (uint32_t i = 0; i < height; i++) {
+        for (uint32_t j = 0; j < width; j++) {
             rgb[i][j] = 0;
             fread(&rgb[i][j], bytespp, 1, fp);
         }
@@ -102,12 +102,12 @@ int compare_tables(IMAGE *picture1, IMAGE *picture2){
 
 void compare_pixels(IMAGE *picture1, IMAGE *picture2) {
     int count_of_pixels = 0;
-    for (uint32_t i = 0; i < abs(picture1->info->height); i++){
-        for (uint32_t j = 0; j < abs(picture1->info->width); j++){
+    for (uint32_t i = 0; i < picture1->info->height; i++){
+        for (uint32_t j = 0; j < picture1->info->width; j++){
             uint32_t first = picture1->info->height > 0 ? i : -picture1->info->height - i - 1;
             uint32_t second = picture2->info->height > 0 ? i : -picture2->info->height - i - 1;
             if(picture1->rgb[first][j] != picture2->rgb[second][j]){
-                fprintf(stderr, "%lld %lld \n", j, i);
+                fprintf(stderr, "%d %d \n", j, i);
                 count_of_pixels++;
                 if (count_of_pixels >= 100) break;
             }  
@@ -156,7 +156,7 @@ int mine_comparer(char* input1, char* input2){
     }
     
     if ((picture1->info->width != picture2->info->width) ||
-        (abs(picture1->info->height) != abs(picture2->info->height))) {
+        (picture1->info->height != picture2->info->height)) {
         fprintf(stdout, "Images have different values of width or height. ");
         free_Image(picture1,header1,info1);
         fclose(file1);

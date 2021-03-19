@@ -1,3 +1,6 @@
+#ifndef CONVERTER_H
+#define CONVERTER_H
+
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
@@ -37,3 +40,5 @@ typedef struct BMP_Image{
 }IMAGE;
 
 int mine_realisation(char* input, char* output);
+
+#endif

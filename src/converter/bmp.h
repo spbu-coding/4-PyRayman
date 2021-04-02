@@ -1,11 +1,8 @@
-#ifndef CONVERTER_H
-#define CONVERTER_H
-
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <stdbool.h>
 #pragma pack(push, 2)
 typedef struct tagBMPFILEHEADER{
     uint16_t file_type;
@@ -33,12 +30,17 @@ typedef struct tagBMPINFOHEADER{
 }BMPINFOHEADER;
 #pragma pack(pop)
 
+typedef struct rgb{
+    unsigned char blue;
+    unsigned char green;
+    unsigned char red;
+}RGB;
+
 typedef struct BMP_Image{
     BMPINFOHEADER *info;
     uint8_t *palette;
-    uint8_t *rgb;
+    RGB **rgb;
 }IMAGE;
 
-int mine_realisation(char* input, char* output);
-
-#endif
+int mine_comparer(char* input1, char* input2);
+int mine_realisation(char* input1, char* input2);

@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
         return -1;
     }
    
-   if(mine_comparer(argv[1],argv[2]) != 0){
+    if(mine_comparer(argv[1],argv[2]) != 0){
         return -1;
     }
     

@@ -116,9 +116,11 @@ void free_Image(IMAGE *picture, BMPFILEHEADER *header){
         free(picture->rgb[i]);    
     }
     free(picture->info);
-    if(picture->info->bpp == 8){
+    
+    if(picture->palette != NULL){
         free(picture->palette);
     }
+
     free(picture->rgb);
     free(picture);
     free(header);
@@ -164,12 +166,6 @@ int read_BMP(FILE *fp, BMPINFOHEADER *info, BMPFILEHEADER *header, IMAGE *pictur
         return -2;
         
     }
-    if(abs(info->height) * abs(info->width) * info->bpp / 8 != info->image_size){
-        fprintf(stdout,"Broken file. height * width != image size\n");
-        fclose(fp);
-        return -2;
-    }
-    
     picture = read_Image(fp,info,picture);
     
     if(!picture){
